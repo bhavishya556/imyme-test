@@ -2,12 +2,17 @@ const express = require('express');
 const app = express();
 
 app.get('*', (req, res) => {
-  const host = req.headers.host; // e.g. subdomain.mydomain.com
-  const domain = 'mydomain.com'; // replace with your domain
+  const host = req.headers.host; // e.g. subdomain.imyme.in
+  const domain = 'imyme.in'; // ← Make sure this matches your actual domain
   let subdomain = '';
 
-  if (host.endsWith(domain)) {
-    subdomain = host.slice(0, host.length - domain.length - 1); // get subdomain part
+  console.log(`Incoming request on host: ${host}`);
+
+  if (host && host.endsWith(domain)) {
+    subdomain = host.slice(0, host.length - domain.length - 1); // remove ".imyme.in"
+    console.log(`Detected subdomain: ${subdomain}`);
+  } else {
+    console.log(`No matching domain found in host: ${host}`);
   }
 
   const html = `
